@@ -1,28 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "SERVICE_NAME.fullname" . }}
+  name: {{ include "project4648.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "SERVICE_NAME.name" . }}
-    helm.sh/chart: {{ include "SERVICE_NAME.chart" . }}
+    app.kubernetes.io/name: {{ include "project4648.name" . }}
+    helm.sh/chart: {{ include "project4648.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "SERVICE_NAME.name" . }}
+      app.kubernetes.io/name: {{ include "project4648.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "SERVICE_NAME.name" . }}
+        app.kubernetes.io/name: {{ include "project4648.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: "k8s.db.env"
+              value: "db-config-k8s"
           ports:
             - name: http
               containerPort: {{ .Values.service.internalport }}

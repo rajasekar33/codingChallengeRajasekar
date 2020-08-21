@@ -12,5 +12,5 @@ RUN npm run build
 FROM nginx:1.14.1-alpine
 COPY nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html/SERVICE_NAME
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html/project4648
 CMD ["nginx", "-g", "daemon off;"]
